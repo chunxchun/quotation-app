@@ -1,5 +1,5 @@
 {
-	"name": "decoration-quotation-app",
+	"name": "quotation-app",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
@@ -12,13 +12,29 @@
 		"cf-typegen": "wrangler types"
 	},
 	"dependencies": {
+		"@hookform/resolvers": "^5.0.1",
+		"@radix-ui/react-dialog": "^1.1.10",
+		"@radix-ui/react-label": "^2.1.4",
+		"@radix-ui/react-popover": "^1.1.10",
+		"@radix-ui/react-slot": "^1.2.0",
+		"@tailwindcss/vite": "^4.1.4",
+		"class-variance-authority": "^0.7.1",
+		"clsx": "^2.1.1",
+		"cmdk": "^1.1.1",
+		"lucide-react": "^0.501.0",
+		"nanoid": "^5.1.5",
 		"react": "^19.0.0",
-		"react-dom": "^19.0.0"
+		"react-dom": "^19.0.0",
+		"react-hook-form": "^7.55.0",
+		"tailwind-merge": "^3.2.0",
+		"tailwindcss": "^4.1.4",
+		"zod": "^3.22.4"
 	},
 	"devDependencies": {
 		"@cloudflare/vite-plugin": "^1.0.8",
 		"@cloudflare/workers-types": "^4.20250420.0",
 		"@eslint/js": "^9.21.0",
+		"@types/node": "^22.14.1",
 		"@types/react": "^19.0.10",
 		"@types/react-dom": "^19.0.4",
 		"@vitejs/plugin-react": "^4.3.4",
