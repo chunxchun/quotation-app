@@ -25,6 +25,18 @@ export const works = [
   { value: "噴油執漏", label: "噴油執漏" },
 ];
 
+export const levels = [
+  { value: "-4.9mPD", label: "-4.9mPD" },
+  { value: "-4.0mPD", label: "-4.0mPD" },
+  { value: "+0.0mPD", label: "+0.0mPD" },
+  { value: "+4.0mPD", label: "+4.0mPD" },
+  { value: "+6.0mPD", label: "+6.0mPD" },
+  { value: "+9.0mPD", label: "+9.0mPD" },
+  { value: "+9.2mPD", label: "+9.2mPD" },
+  { value: "+11.8mPD", label: "+11.8mPD" },
+  { value: "+18.3mPD", label: "+18.3mPD" },
+];
+
 export const buildings = [
   { value: "IW", label: "IW" },
   { value: "PST", label: "PST" },
@@ -32,11 +44,10 @@ export const buildings = [
 ];
 
 export const locations = [
-  { value: "-4.0", label: "-4.0mPD" },
-  { value: "+0.0", label: "+0.0mPD" },
-  { value: "+4.0", label: "+4.0mPD" },
-  { value: "+11.8", label: "+11.8mPD" },
-  { value: "+18.4", label: "+18.4mPD" },
+  { value: "Roof", label: "Roof" },
+  { value: "LV Switchroom", label: "LV Switchroom" },
+  { value: "Blower Room", label: "Blower Room" },
+  { value: "Loading And Unloading Area", label: "Loading And Unloading Area" },
 ];
 
 export const substrates = [

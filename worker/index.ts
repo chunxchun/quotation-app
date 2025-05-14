@@ -1,3 +1,7 @@
+interface Env {
+  // Add your environment variables and bindings here
+}
+
 export default {
   fetch(request) {
     const url = new URL(request.url);
