@@ -21,11 +21,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { locations } from "@/data/combobox";
 import { cn } from "@/lib/utils";
 import type { FormFieldProps } from "@/types/FormTypes";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
+
+// data
+import { locations, groupLocations } from "@/data/combobox";
+
 export function LocationFormField({ form }: FormFieldProps) {
   const [isOpen, setIsOpen] = useState(false);
   return (

@@ -47,6 +47,22 @@ export function DailyReportForm() {
     defaultValues: DEFAULT_DAILY_REPORT_FORM_VALUES,
   });
 
+  const getDimensions = async (
+    image: File
+  ): Promise<{ height: number; width: number }> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = async (event) => {
+        const image = new Image();
+        image.src = event.target?.result as string;
+        await image.decode();
+        resolve({ height: image.height, width: image.width });
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(image);
+    });
+  };
+
   const onSubmit = async (data: FormValues) => {
     setIsUploading(true);
     try {
@@ -54,8 +70,16 @@ export function DailyReportForm() {
 
       const report_date = format(data.report_date, "yyyy-MM-dd");
       const [yyyy, mm, dd] = report_date.split("-");
-      console.log('data', data);
-      formData.append("image_file", data.files[0]);
+      console.log("data", data);
+
+      const imageFile = data.files[0];
+      // get image dimension
+      const { height, width } = await getDimensions(imageFile);
+
+      formData.append("image_height", height.toString());
+      formData.append("image_width", width.toString());
+
+      formData.append("image_file", imageFile);
       formData.append("image_desc", data.desc);
       formData.append("report_date", report_date);
       formData.append("building", data.building);
@@ -89,7 +113,7 @@ export function DailyReportForm() {
       }
 
       setIsUploading(false);
-      form.reset()
+      form.reset();
     } catch (err) {
       toast(`error: ${err}`);
       setIsUploading(false);

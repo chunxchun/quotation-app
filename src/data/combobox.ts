@@ -44,7 +44,7 @@ export const buildings = [
 ];
 
 export const locations = [
-  { value: "Roof", label: "Roof" },
+  { value: "IW Roof", label: "IW Roof" },
   { value: "Reinforced Concrete Kerb", label: "Reinforced Concrete Kerb" },
   { value: "LV Switchroom", label: "LV Switchroom" },
   { value: "General Area", label: "General Area" },
@@ -62,14 +62,24 @@ export const locations = [
   { value: "Spinkler Pump Room", label: "Spinkler Pump Room" },
   { value: "Ventilation Room", label: "Ventilation Room" },
   { value: "Dry Well", label: "Dry Well" },
+
+  { value: "PST Roof", label: "PST Roof" },
   { value: "Primary Sludge Pump Room", label: "Primary Sludge Pump Room" },
   { value: "General Area (Pump 1-3)", label: "General Area (Pump 1-3)" },
   { value: "General Area (Pump 4-5)", label: "General Area (Pump 4-5)" },
+
+  { value: "TXH Roof", label: "TXH Roof" },
   { value: "Room A", label: "Room A" },
   { value: "Room B", label: "Room B" },
   { value: "Room C", label: "Room C" },
   { value: "Room D", label: "Room D" },
 ];
+
+export const groupLocations = {
+  "IW": locations.slice(0,15),
+  "PST": locations.slice(15,19),
+  "TXH": locations.slice(19,24)
+}
 
 export const substrates = [
   { value: "高位", label: "高位" },
