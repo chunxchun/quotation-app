@@ -75,7 +75,11 @@ export const substrates = [
   { value: "高位", label: "高位" },
   { value: "低位", label: "低位" },
   { value: "牆身", label: "牆身" },
+  { value: "牆身高位", label: "牆身高位" },
+  { value: "牆身低位", label: "牆身低位" },
   { value: "柱身", label: "柱身" },
+  { value: "柱身高位", label: "柱身高位" },
+  { value: "柱身低位", label: "柱身低位" },
   { value: "天花", label: "天花" },
   { value: "陣底", label: "陣底" },
 ];
