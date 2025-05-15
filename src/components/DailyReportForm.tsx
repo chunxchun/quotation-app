@@ -89,6 +89,7 @@ export function DailyReportForm() {
       }
 
       setIsUploading(false);
+      form.reset()
     } catch (err) {
       toast(`error: ${err}`);
       setIsUploading(false);

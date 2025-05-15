@@ -40,14 +40,35 @@ export const levels = [
 export const buildings = [
   { value: "IW", label: "IW" },
   { value: "PST", label: "PST" },
-  { value: "TX", label: "TX" },
+  { value: "TXH", label: "TXH" },
 ];
 
 export const locations = [
   { value: "Roof", label: "Roof" },
+  { value: "Reinforced Concrete Kerb", label: "Reinforced Concrete Kerb" },
   { value: "LV Switchroom", label: "LV Switchroom" },
+  { value: "General Area", label: "General Area" },
   { value: "Blower Room", label: "Blower Room" },
-  { value: "Loading And Unloading Area", label: "Loading And Unloading Area" },
+  { value: "Skylight", label: "Skylight" },
+  { value: "Fixed Bar Screen Room", label: "Fixed Bar Screen Room" },
+  { value: "Deodorization Unit Room", label: "Deodorization Unit Room" },
+  { value: "Fire Control Room", label: "Fire Control Room" },
+  {
+    value: "Septic Loading And Unloading Area",
+    label: "Septic Loading And Unloading Area",
+  },
+  { value: "Septic Waste Dumping Bay", label: "Septic Waste Dumping Bay" },
+  { value: "Screening Room", label: "Screening Room" },
+  { value: "Spinkler Pump Room", label: "Spinkler Pump Room" },
+  { value: "Ventilation Room", label: "Ventilation Room" },
+  { value: "Dry Well", label: "Dry Well" },
+  { value: "Primary Sludge Pump Room", label: "Primary Sludge Pump Room" },
+  { value: "General Area (Pump 1-3)", label: "General Area (Pump 1-3)" },
+  { value: "General Area (Pump 4-5)", label: "General Area (Pump 4-5)" },
+  { value: "Room A", label: "Room A" },
+  { value: "Room B", label: "Room B" },
+  { value: "Room C", label: "Room C" },
+  { value: "Room D", label: "Room D" },
 ];
 
 export const substrates = [
