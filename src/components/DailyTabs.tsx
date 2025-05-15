@@ -17,11 +17,13 @@ export function DailyTabs() {
         <TabsTrigger value="post">Uploads</TabsTrigger>
         <TabsTrigger value="get">Downloads</TabsTrigger>
       </TabsList>
+
+      {/* uploads */}
       <TabsContent value="post">
         <Card>
           <CardHeader>
-            <CardTitle>Photo Description</CardTitle>
-            <CardDescription>photo + desc</CardDescription>
+            <CardTitle>Post Daily Report Photos</CardTitle>
+            <CardDescription>Photo + Description</CardDescription>
           </CardHeader>
           <CardContent>
             <DailyReportForm />
@@ -29,11 +31,13 @@ export function DailyTabs() {
           <CardFooter></CardFooter>
         </Card>
       </TabsContent>
+
+      {/* downloads */}
       <TabsContent value="get">
         <Card>
           <CardHeader>
-            <CardTitle>Get Daily Report </CardTitle>
-            <CardDescription>photo + desc</CardDescription>
+            <CardTitle>Get Daily Report Photos</CardTitle>
+            <CardDescription>Photo + Description</CardDescription>
           </CardHeader>
           <CardContent>
             <DailyReportImages />

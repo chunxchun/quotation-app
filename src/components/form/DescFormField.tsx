@@ -6,7 +6,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import type { FormFieldProps } from "@/types/FormType";
+import type { FormFieldProps } from "@/types/FormTypes";
 
 export function DescFormField({ form }: FormFieldProps) {
   return (

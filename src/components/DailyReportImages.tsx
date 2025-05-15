@@ -1,34 +1,64 @@
+import { BASE_API_URL, BEARER_TOKEN, R2_URL } from "@/data/constants";
+import type {
+  DailyReportImage,
+  DailyReportImageResponse,
+} from "@/types/DailyReportTypes";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { DatePicker } from "./DatePicker";
 
 export function DailyReportImages() {
-  const [dailyReport, setDailyReport] = useState<unknown>();
+  const [dailyReport, setDailyReport] = useState<Array<DailyReportImage>>();
+  const [date, setDate] = useState<Date | undefined>(undefined);
+
   useEffect(() => {
-    const getData = async () => {
+    if (!date) return;
+    const parsedDate = date.toLocaleDateString("en-CA");
+    const [yyyy, mm, dd] = parsedDate?.split("-");
+
+    const fetchData = async () => {
       try {
-        // const fetchUrl = `http://localhost:8787/api/daily-reports/images/${yyyy}/${mm}/${dd}`
-        const fetchUrl = `https://hono-weather-fetcher.find2meals.workers.dev/api/daily-reports/images/2025/02/03`;
-        console.log("start fetch");
+        const fetchUrl = `${BASE_API_URL}/daily-reports/images/${yyyy}/${mm}/${dd}`;
         const response = await fetch(fetchUrl, {
-          mode: "cors",
           method: "GET",
           headers: {
-            Authorization: "Bearer joerogan",
-            Accept: "*/*",
-            Host: "https://quotation-app.find2meals.workers.dev",
+            Authorization: `Bearer ${BEARER_TOKEN}`,
           },
         });
-        console.log(response);
-        setDailyReport(response);
+
+        const { success, message, results } =
+          (await response.json()) as DailyReportImageResponse;
+        if (success) {
+          toast.success("fetch success", {
+            description: message,
+          });
+        }
+        setDailyReport(results);
       } catch (err) {
-        console.error(err);
+        toast.error(JSON.stringify(err));
       }
     };
-    getData();
-  }, []);
+    fetchData();
+  }, [date]);
+
   return (
     <>
       <p>daily report images</p>
-      <pre>{JSON.stringify(dailyReport)}</pre>
+      <DatePicker date={date} setDate={setDate} />
+      {/* <pre className="w-full text-wrap p-4">{JSON.stringify(dailyReport)}</pre> */}
+      {dailyReport?.length ? (
+        dailyReport.map((daily) => {
+          return (
+            <div key={daily.id} className="flex flex-col py-4">
+              <p className="w-full text-wrap">{daily.desc}</p>
+              <img src={`${R2_URL}/${daily.url}`} alt={daily.desc} />
+              {/* <img src={`${BASE_API_URL}/api/${daily.url}`} alt={daily.desc} /> */}
+            </div>
+          );
+        })
+      ) : (
+        <p>has not</p>
+      )}
     </>
   );
 }

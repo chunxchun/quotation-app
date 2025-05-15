@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
-import type { FormFieldProps } from "@/types/FormType";
+import type { FormFieldProps } from "@/types/FormTypes";
 import { MAX_FILE_SIZE } from "@/data/form";
 
 export function FileUploadFormField({ form }: FormFieldProps) {

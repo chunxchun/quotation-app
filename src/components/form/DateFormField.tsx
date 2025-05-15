@@ -15,7 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import type { FormFieldProps } from "@/types/FormType";
+import type { FormFieldProps } from "@/types/FormTypes";
 
 export function DateFormField({ form }: FormFieldProps) {
   return (

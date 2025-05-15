@@ -23,7 +23,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import type { FormFieldProps } from "@/types/FormType";
+import type { FormFieldProps } from "@/types/FormTypes";
 
 import { levels } from "@/data/combobox";
 export function LevelFormField({ form }: FormFieldProps) {

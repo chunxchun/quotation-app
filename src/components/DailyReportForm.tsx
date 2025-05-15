@@ -17,6 +17,8 @@ import { DEFAULT_DAILY_REPORT_FORM_VALUES, MAX_FILE_SIZE } from "@/data/form";
 import { FileUploadFormField } from "./form/FileUploadFormField";
 import { toast } from "sonner";
 import { useState } from "react";
+import { BASE_API_URL, BEARER_TOKEN } from "@/data/constants";
+import { DailyReportImageResponse } from "@/types/DailyReportTypes";
 
 const formSchema = z.object({
   files: z
@@ -49,13 +51,10 @@ export function DailyReportForm() {
     setIsUploading(true);
     try {
       const formData = new FormData();
-      for (const [key, value] of Object.entries(data)) {
-        console.log(`${key}: ${value}`);
-      }
+
       const report_date = format(data.report_date, "yyyy-MM-dd");
       const [yyyy, mm, dd] = report_date.split("-");
-      console.log("date", report_date);
-      console.log(yyyy, "/", mm, "/", dd);
+      console.log('data', data);
       formData.append("image_file", data.files[0]);
       formData.append("image_desc", data.desc);
       formData.append("report_date", report_date);
@@ -64,25 +63,32 @@ export function DailyReportForm() {
       formData.append("location", data.location);
       formData.append("substrate", data.substrate);
       formData.append("work", data.work);
-      console.log("form data", formData);
-      for (var key of formData.entries()) {
-        console.log(key[0] + ", " + key[1]);
+
+      for (const value of formData.entries()) {
+        console.log(value[0], value[1]);
       }
-      console.log('type file', typeof data.files[0])
-      // const fetchUrl = `https://hono-weather-fetcher.find2meals.workers.dev/api/daily-reports/images/${yyyy}/${mm}/${dd}`;
-      const fetchUrl = `http://localhost:8787/api/daily-reports/images/${yyyy}/${mm}/${dd}`
+      const fetchUrl = `${BASE_API_URL}/daily-reports/images/${yyyy}/${mm}/${dd}`;
+      // const fetchUrl = `http://localhost:8787/api/daily-reports/images/${yyyy}/${mm}/${dd}`;
+      // const fetchUrl = `http://localhost:8787/api/tests/form-data`;
+
       const response = await fetch(fetchUrl, {
-        mode: "cors",
         method: "POST",
         headers: {
-          "Authorization": "Bearer joerogan",
-          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${BEARER_TOKEN}`,
         },
         body: formData,
       });
-      console.log(response);
+
+      const { success, message } =
+        (await response.json()) as DailyReportImageResponse;
+
+      if (success) {
+        toast.success("fetch success", {
+          description: message,
+        });
+      }
+
       setIsUploading(false);
-      // toast(`done ${response}`);
     } catch (err) {
       toast(`error: ${err}`);
       setIsUploading(false);
