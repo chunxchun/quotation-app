@@ -16,27 +16,29 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import type { FormFieldProps } from "@/types/FormTypes";
+import { useState } from "react";
 
 export function DateFormField({ form }: FormFieldProps) {
-  return (
+  const [isOpen, setIsOpen] = useState(false)
+    return (
     <FormField
       control={form.control}
       name="report_date"
       render={({ field }) => (
         <FormItem className="flex flex-col py-4 w-full">
           <FormLabel>Report Date</FormLabel>
-          <Popover>
+          <Popover open={isOpen} onOpenChange={setIsOpen}>
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
                   variant={"outline"}
                   className={cn(
-                    "w-[240px] pl-3 text-left font-normal w-full",
+                    "pl-3 text-left font-normal w-full",
                     !field.value && "text-muted-foreground"
                   )}
                 >
                   {field.value ? (
-                    format(field.value, "PPP")
+                    format(field.value, "yyyy-MM-dd")
                   ) : (
                     <span>Pick a date</span>
                   )}
@@ -48,7 +50,10 @@ export function DateFormField({ form }: FormFieldProps) {
               <Calendar
                 mode="single"
                 selected={new Date(field.value)}
-                onSelect={field.onChange}
+                onSelect={(_,date) => {
+                  field.onChange(date);
+                  setIsOpen(false)
+                }}
                 disabled={(date) =>
                   date > new Date() || date < new Date("2024-01-01")
                 }

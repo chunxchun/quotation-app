@@ -1,3 +1,4 @@
+
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 
@@ -9,7 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 type Props = {
   date: Date | undefined;
@@ -17,25 +18,33 @@ type Props = {
 };
 
 export function DatePicker({ date = undefined, setDate }: Props) {
+  const [isOpen, setIsOpen] = useState(false)
+  // const onSelect: SelectSingleEventHandler = (date) => {
+  //   onSelect?.(date);
+  //   setIsOpen(false)
+  // }
   return (
-    <Popover>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
           className={cn(
-            "w-[240px] justify-start text-left font-normal",
+            "w-[340px] justify-start text-left font-normal",
             !date && "text-muted-foreground"
           )}
         >
           <CalendarIcon />
-          {date ? format(date, "PPP") : <span>Pick a date</span>}
+          {date ? format(date, "yyyy-MM-dd") : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar
           mode="single"
           selected={date}
-          onSelect={setDate}
+          onSelect={(_,date) => {
+            setDate(date);
+            setIsOpen(false);
+          }}
           initialFocus
         />
       </PopoverContent>

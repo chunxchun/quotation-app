@@ -43,21 +43,31 @@ export function DailyReportImages() {
 
   return (
     <>
-      <p>daily report images</p>
+      <h2 className="w-full py-4">daily report images</h2>
       <DatePicker date={date} setDate={setDate} />
-      {/* <pre className="w-full text-wrap p-4">{JSON.stringify(dailyReport)}</pre> */}
+
       {dailyReport?.length ? (
         dailyReport.map((daily) => {
           return (
             <div key={daily.id} className="flex flex-col py-4">
               <p className="w-full text-wrap">{daily.desc}</p>
-              <img src={`${R2_URL}/${daily.url}`} alt={daily.desc} />
+              {/* <div className="w-full p-2 aspect-square border"> */}
+                <img
+                  className=" aspect-square object-cover"
+                  src={`${R2_URL}/${daily.url}`}
+                  alt={daily.desc}
+                />
+              {/* </div> */}
               {/* <img src={`${BASE_API_URL}/api/${daily.url}`} alt={daily.desc} /> */}
             </div>
           );
         })
       ) : (
-        <p>has not</p>
+        <p className="w-full text-wrap py-4">
+          {date
+            ? `No images found in ${date.toLocaleDateString("en-HK")}`
+            : `no specified date`}
+        </p>
       )}
     </>
   );

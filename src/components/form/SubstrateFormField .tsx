@@ -1,7 +1,5 @@
 "use client";
 
-import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -23,9 +21,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import type { FormFieldProps } from "@/types/FormTypes";
 import { substrates } from "@/data/combobox";
+import { cn } from "@/lib/utils";
+import type { FormFieldProps } from "@/types/FormTypes";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { useState } from "react";
 export function SubstrateFormField({ form }: FormFieldProps) {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <FormField
       control={form.control}
@@ -33,14 +35,14 @@ export function SubstrateFormField({ form }: FormFieldProps) {
       render={({ field }) => (
         <FormItem className="flex flex-col py-4 w-full">
           <FormLabel>Substrate</FormLabel>
-          <Popover>
+          <Popover open={isOpen} onOpenChange={setIsOpen}>
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
                   variant="outline"
                   role="combobox"
                   className={cn(
-                    "w-[200px] justify-between w-full",
+                    "justify-between w-full",
                     !field.value && "text-muted-foreground"
                   )}
                 >
@@ -68,6 +70,7 @@ export function SubstrateFormField({ form }: FormFieldProps) {
                         key={substrate.value}
                         onSelect={() => {
                           form.setValue("substrate", substrate.value);
+                          setIsOpen(false);
                         }}
                       >
                         {substrate.label}

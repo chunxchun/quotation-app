@@ -26,7 +26,9 @@ import {
 import type { FormFieldProps } from "@/types/FormTypes";
 
 import { levels } from "@/data/combobox";
+import { useState } from "react";
 export function LevelFormField({ form }: FormFieldProps) {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <FormField
       control={form.control}
@@ -34,14 +36,15 @@ export function LevelFormField({ form }: FormFieldProps) {
       render={({ field }) => (
         <FormItem className="flex flex-col py-4 w-full">
           <FormLabel>Level</FormLabel>
-          <Popover>
+          <Popover open={isOpen} onOpenChange={setIsOpen}>
+            {" "}
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
                   variant="outline"
                   role="combobox"
                   className={cn(
-                    "w-[200px] justify-between w-full",
+                    "justify-between w-full",
                     !field.value && "text-muted-foreground"
                   )}
                 >
@@ -64,6 +67,7 @@ export function LevelFormField({ form }: FormFieldProps) {
                         key={level.value}
                         onSelect={() => {
                           form.setValue("level", level.value);
+                          setIsOpen(false);
                         }}
                       >
                         {level.label}
