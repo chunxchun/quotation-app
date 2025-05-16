@@ -27,7 +27,7 @@ import { Check, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
 
 // data
-import { locations, groupLocations } from "@/data/combobox";
+import { locations } from "@/data/combobox";
 
 export function LocationFormField({ form }: FormFieldProps) {
   const [isOpen, setIsOpen] = useState(false);

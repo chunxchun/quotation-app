@@ -51,12 +51,13 @@ export function DailyReportImages() {
           return (
             <div key={daily.id} className="flex flex-col py-4">
               <p className="w-full text-wrap">{daily.desc}</p>
+              <p className="w-full text-wrap">{`${daily.building}${daily.level}${daily.location}${daily.substrate}${daily.work}`}</p>
               {/* <div className="w-full p-2 aspect-square border"> */}
-                <img
-                  className=" aspect-square object-cover"
-                  src={`${R2_URL}/${daily.url}`}
-                  alt={daily.desc}
-                />
+              <img
+                className=" aspect-square object-cover"
+                src={`${R2_URL}/${daily.url}`}
+                alt={daily.desc}
+              />
               {/* </div> */}
               {/* <img src={`${BASE_API_URL}/api/${daily.url}`} alt={daily.desc} /> */}
             </div>
