@@ -1,24 +1,23 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { DEFAULT_DAILY_REPORT_FORM_VALUES, MAX_FILE_SIZE } from "@/data/form";
+import { postDailyReportImage } from "@/lib/helpers";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { format } from "date-fns";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import * as z from "zod";
 import { BuildingFormField } from "./form/BuildingFormField";
-import { LocationFormField } from "./form/LocationFormField";
+import { DateFormField } from "./form/DateFormField";
+import { DescFormField } from "./form/DescFormField";
+import { FileUploadFormField } from "./form/FileUploadFormField";
 import { LevelFormField } from "./form/LevelFormField";
+import { LocationFormField } from "./form/LocationFormField";
 import { SubstrateFormField } from "./form/SubstrateFormField ";
 import { WorkFormField } from "./form/WorkFormField ";
-import { DescFormField } from "./form/DescFormField";
-import { DateFormField } from "./form/DateFormField";
-import { DEFAULT_DAILY_REPORT_FORM_VALUES, MAX_FILE_SIZE } from "@/data/form";
-import { FileUploadFormField } from "./form/FileUploadFormField";
-import { toast } from "sonner";
-import { useState } from "react";
-import { BASE_API_URL, BEARER_TOKEN } from "@/data/constants";
-import { DailyReportImageResponse } from "@/types/DailyReportTypes";
 
 const formSchema = z.object({
   files: z
@@ -47,71 +46,33 @@ export function DailyReportForm() {
     defaultValues: DEFAULT_DAILY_REPORT_FORM_VALUES,
   });
 
-  const getDimensions = async (
-    image: File
-  ): Promise<{ height: number; width: number }> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = async (event) => {
-        const image = new Image();
-        image.src = event.target?.result as string;
-        await image.decode();
-        resolve({ height: image.height, width: image.width });
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(image);
-    });
-  };
-
   const onSubmit = async (data: FormValues) => {
     setIsUploading(true);
+
     try {
-      const formData = new FormData();
 
       const report_date = format(data.report_date, "yyyy-MM-dd");
-      const [yyyy, mm, dd] = report_date.split("-");
-      console.log("data", data);
+      const imageFiles = data.files;
+      const postResponses = imageFiles.map((file) =>
+        postDailyReportImage(
+          file,
+          data.desc,
+          report_date,
+          data.building,
+          data.level,
+          data.location,
+          data.substrate,
+          data.work
+        )
+      );
 
-      const imageFile = data.files[0];
-      // get image dimension
-      const { height, width } = await getDimensions(imageFile);
-
-      formData.append("image_height", height.toString());
-      formData.append("image_width", width.toString());
-
-      formData.append("image_file", imageFile);
-      formData.append("image_desc", data.desc);
-      formData.append("report_date", report_date);
-      formData.append("building", data.building);
-      formData.append("level", data.level);
-      formData.append("location", data.location);
-      formData.append("substrate", data.substrate);
-      formData.append("work", data.work);
-
-      for (const value of formData.entries()) {
-        console.log(value[0], value[1]);
-      }
-      const fetchUrl = `${BASE_API_URL}/daily-reports/images/${yyyy}/${mm}/${dd}`;
-      // const fetchUrl = `http://localhost:8787/api/daily-reports/images/${yyyy}/${mm}/${dd}`;
-      // const fetchUrl = `http://localhost:8787/api/tests/form-data`;
-
-      const response = await fetch(fetchUrl, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${BEARER_TOKEN}`,
-        },
-        body: formData,
+      const results = await Promise.all(postResponses);
+      console.log(results);
+  
+      toast.success(`post success`, {
+        description: `success post ${imageFiles.length} daily report image `,
       });
-
-      const { success, message } =
-        (await response.json()) as DailyReportImageResponse;
-
-      if (success) {
-        toast.success("fetch success", {
-          description: message,
-        });
-      }
-
+      
       setIsUploading(false);
       form.reset();
     } catch (err) {
